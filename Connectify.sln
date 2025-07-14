@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectify", "Connectify\Connectify.csproj", "{5C22B365-7D2A-4924-9DFE-B476A059E94B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C22B365-7D2A-4924-9DFE-B476A059E94B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C22B365-7D2A-4924-9DFE-B476A059E94B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C22B365-7D2A-4924-9DFE-B476A059E94B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C22B365-7D2A-4924-9DFE-B476A059E94B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {571C5FF7-CD14-42AD-941F-F080799769CF}
+	EndGlobalSection
+EndGlobal

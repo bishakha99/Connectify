@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Welcome to Connectify";
+}
+
+<!-- HERO SECTION -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- Left Column: Text and Buttons -->
+            <div class="col-lg-6">
+                <h1 class="display-4">Connect instantly, chat seamlessly.</h1>
+                <p class="lead">
+                    Connectify is a modern, real-time messaging platform designed to bring you closer to the people who matter most.
+                </p>
+                <div class="mt-4">
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Get Started</a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary">Log In</a>
+                </div>
+            </div>
+
+            <!-- Right Column: Image -->
+            <div class="col-lg-6 d-none d-lg-block">
+                <img src="~/images/hero-image.svg" alt="Messaging Illustration" class="hero-image" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<div class="features-section text-center">
+    <div class="container">
+        <h2 class="mb-5">Why you'll love Connectify</h2>
+        <div class="row">
+
+            <!-- Feature 1 -->
+            <div class="col-md-4">
+                <div class="feature-icon">
+                    <i class="bi bi-chat-dots-fill"></i>
+                </div>
+                <h3>Real-Time Chat</h3>
+                <p>Messages are delivered instantly without needing to refresh the page, keeping your conversations fluid.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-md-4">
+                <div class="feature-icon">
+                    <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <h3>Secure & Private</h3>
+                <p>Your privacy is our priority. All communications are secure, so you can chat with peace of mind.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-md-4">
+                <div class="feature-icon">
+                    <i class="bi bi-image-fill"></i>
+                </div>
+                <h3>Share Your Moments</h3>
+                <p>Easily send and receive photos within your chats to share important moments with friends and family.</p>
+            </div>
+
+        </div>
+    </div>
+</div>

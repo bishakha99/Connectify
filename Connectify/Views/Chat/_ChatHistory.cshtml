@@ -1,0 +1,28 @@
+﻿@model List<Connectify.DAL.Entities.Message>
+
+@{
+    var currentUserId = ViewBag.CurrentUserId;
+}
+
+
+@foreach (var message in Model)
+{
+    var messageClass = message.SenderId == currentUserId ? "sent" : "received";
+    var messageAlignment = message.SenderId == currentUserId ? "d-flex justify-content-end" : "d-flex justify-content-start";
+
+    <div class="@messageAlignment mb-2">
+        <div class="chat-bubble @messageClass">
+            @if (!string.IsNullOrEmpty(message.MessageText))
+            {
+                @message.MessageText
+            }
+            @if (!string.IsNullOrEmpty(message.ImageUrl))
+            {
+                <img src="@message.ImageUrl" class="chat-image" alt="User image" />
+            }
+            <div class="message-time">
+                @message.SentAt?.ToLocalTime().ToString("hh:mm tt")
+            </div>
+        </div>
+    </div>
+}
