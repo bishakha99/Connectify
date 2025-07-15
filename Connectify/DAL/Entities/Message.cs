@@ -28,6 +28,9 @@ public partial class Message
     [Column("sent_at")]
     public DateTime? SentAt { get; set; }
 
+    [Column("IsRead ")]
+    public bool IsRead { get; set; }
+
     [ForeignKey("ReceiverId")]
     [InverseProperty("MessageReceivers")]
     public virtual User Receiver { get; set; } = null!;

@@ -4,7 +4,6 @@
     var currentUserId = ViewBag.CurrentUserId;
 }
 
-
 @foreach (var message in Model)
 {
     var messageClass = message.SenderId == currentUserId ? "sent" : "received";
@@ -20,9 +19,13 @@
             {
                 <img src="@message.ImageUrl" class="chat-image" alt="User image" />
             }
-            <div class="message-time">
-                @message.SentAt?.ToLocalTime().ToString("hh:mm tt")
-            </div>
         </div>
+    </div>
+    <div class="message-time">
+        @message.SentAt?.ToLocalTime().ToString("hh:mm tt")
+        @if (message.SenderId == currentUserId && message.IsRead)
+        {
+            <i class="bi bi-check2-all seen-icon"></i>
+        }
     </div>
 }

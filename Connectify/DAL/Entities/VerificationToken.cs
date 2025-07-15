@@ -17,11 +17,11 @@ public partial class VerificationToken
     public long UserId { get; set; }
 
     [Column("otp_code")]
-    [StringLength(10)] 
-    public string OtpCode { get; set; } = null!;
+    [StringLength(10)]
+    public string? OtpCode { get; set; }
 
     [Column("expires_at")]
-    public DateTime ExpiresAt { get; set; }
+    public DateTime? ExpiresAt { get; set; }
 
     [ForeignKey("UserId")]
     [InverseProperty("VerificationTokens")]

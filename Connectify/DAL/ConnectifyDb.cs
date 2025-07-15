@@ -31,6 +31,7 @@ public partial class ConnectifyDb : DbContext
         {
             entity.HasKey(e => e.Id).HasName("messages_pkey");
 
+            entity.Property(e => e.IsRead).HasDefaultValue(false);
             entity.Property(e => e.SentAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasOne(d => d.Receiver).WithMany(p => p.MessageReceivers).HasConstraintName("messages_receiver_id_fkey");

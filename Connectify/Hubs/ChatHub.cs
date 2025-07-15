@@ -55,6 +55,8 @@ namespace Connectify.Hubs
         public async Task SendMessage(long receiverId, string messageText)
         {
             var senderId = GetCurrentUserId();
+            var senderUsername = (await _context.Users.FindAsync(senderId)).Username;
+
             var message = new Message
             {
                 SenderId = senderId,
@@ -68,14 +70,16 @@ namespace Connectify.Hubs
             var receiverConnectionId = _userConnectionManager.GetConnectionId(receiverId);
             if (!string.IsNullOrEmpty(receiverConnectionId))
             {
-                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, message.MessageText, null);
+                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, senderUsername, messageText, null);
             }
-            await Clients.Caller.SendAsync("ReceiveMessage", senderId, message.MessageText, null);
+            await Clients.Caller.SendAsync("ReceiveMessage", senderId, senderUsername, messageText, null);
         }
-        
+
         public async Task SendImageMessage(long receiverId, string imageUrl)
         {
             var senderId = GetCurrentUserId();
+            var senderUsername = (await _context.Users.FindAsync(senderId)).Username;
+
             var message = new Message
             {
                 SenderId = senderId,
@@ -89,14 +93,43 @@ namespace Connectify.Hubs
             var receiverConnectionId = _userConnectionManager.GetConnectionId(receiverId);
             if (!string.IsNullOrEmpty(receiverConnectionId))
             {
-                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, null, imageUrl);
+                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, senderUsername, null, imageUrl);
             }
-            await Clients.Caller.SendAsync("ReceiveMessage", senderId, null, imageUrl);
+            await Clients.Caller.SendAsync("ReceiveMessage", senderId, senderUsername, null, imageUrl);
         }
         
         private long GetCurrentUserId()
         {
             return long.Parse(Context.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        }
+        public async Task MarkMessagesAsRead(long conversationPartnerId)
+        {
+            var currentUserId = GetCurrentUserId();
+
+            // Find all unread messages sent by the partner to the current user
+            var messagesToUpdate = await _context.Messages
+                .Where(m => m.SenderId == conversationPartnerId &&
+                             m.ReceiverId == currentUserId &&
+                             !m.IsRead)
+                .ToListAsync();
+
+            if (messagesToUpdate.Any())
+            {
+                foreach (var message in messagesToUpdate)
+                {
+                    message.IsRead = true;
+                }
+                _context.UpdateRange(messagesToUpdate);
+                await _context.SaveChangesAsync();
+            }
+
+            // Notify the original sender that their messages have been read
+            var partnerConnectionId = _userConnectionManager.GetConnectionId(conversationPartnerId);
+            if (!string.IsNullOrEmpty(partnerConnectionId))
+            {
+                // Tell the partner's client "The user you're talking to (currentUserId) has read your messages"
+                await Clients.Client(partnerConnectionId).SendAsync("MessagesHaveBeenRead", currentUserId);
+            }
         }
     }
 }
